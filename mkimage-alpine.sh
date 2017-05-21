@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -e
+set -x
 
 [ "$(id -u)" -eq 0 ] || {
 	printf >&2 '%s requires root\n' "$0"
@@ -41,6 +42,7 @@ conf() {
 pack() {
 	id=$(tar --numeric-owner -C $ROOTFS -c . | docker import - "${IMAGE}:${REL#v}")
 	docker tag $id $IMAGE:latest
+    docker ps
 }
 
 save() {
