@@ -42,7 +42,7 @@ conf() {
 pack() {
 	id=$(tar --numeric-owner -C $ROOTFS -c . | docker import - "${IMAGE}:${REL#v}")
 	docker tag $id $IMAGE:latest
-    docker ps
+    docker images
 }
 
 save() {
