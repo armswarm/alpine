@@ -3,7 +3,8 @@ pipeline:
     image: quay.io/armswarm/docker:latest
     environment:
       - DOCKER_HOST=tcp://0.0.0.0:2375
-    command: [ "./mkimage-alpine.sh" ]
+    commands:
+      - /bin/sh ./mkimage-alpine.sh
 
 services:
   docker:
