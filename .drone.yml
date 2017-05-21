@@ -2,12 +2,15 @@ pipeline:
   build:
     image: quay.io/armswarm/docker:latest
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - REL=v3.5
     commands:
       - apk add --no-cache grep curl
       - ./mkimage-alpine.sh
 
-services:
   docker:
-    image: quay.io/armswarm/docker:dind
-    privileged: true
+    image: armswarmdrone/docker
+    repo: quay.io/armswarm/alpine
+    tag: [ "3.5", "latest" ]
+    when:
+      branch: master
+      event: push

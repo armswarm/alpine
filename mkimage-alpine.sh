@@ -16,7 +16,7 @@ usage() {
 tmp() {
 	TMP=$(mktemp -d ${TMPDIR:-/var/tmp}/alpine-docker-XXXXXXXXXX)
 	ROOTFS=$(mktemp -d ${TMPDIR:-/var/tmp}/alpine-docker-rootfs-XXXXXXXXXX)
-	trap "rm -rf $TMP $ROOTFS" EXIT TERM INT
+	trap 'rm -rf $TMP $ROOTFS' EXIT TERM INT
 }
 
 apkv() {
@@ -39,49 +39,18 @@ conf() {
 	printf '%s\n' $ADDITIONALREPO >> $ROOTFS/etc/apk/repositories
 }
 
-pack() {
-	id=$(tar --numeric-owner -C $ROOTFS -c . | docker import - "${IMAGE}:${REL#v}")
-	docker tag $id $IMAGE:latest
-    docker images
-}
-
 save() {
-	[ $SAVE -eq 1 ] || return
-
 	tar --numeric-owner -C $ROOTFS -c . | xz > rootfs.tar.xz
 }
 
-while getopts "hr:m:s" opt; do
-	case $opt in
-		r)
-			REL=$OPTARG
-			;;
-		m)
-			MIRROR=$OPTARG
-			;;
-		s)
-			SAVE=1
-			;;
-		c)
-			ADDITIONALREPO=community
-			;;
-		*)
-			usage
-			;;
-	esac
-done
-
 REL=${REL:-edge}
 MIRROR=${MIRROR:-http://nl.alpinelinux.org/alpine}
-SAVE=${SAVE:-0}
 MAINREPO=$MIRROR/$REL/main
 ADDITIONALREPO=$MIRROR/$REL/community
 ARCH=${ARCH:-armhf}
-IMAGE=${IMAGE:-quay.io/armswarm/alpine}
 
 tmp
 getapk
 mkbase
 conf
-pack
 save
