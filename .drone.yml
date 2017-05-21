@@ -1,4 +1,9 @@
 pipeline:
+  docker:
+    image: quay.io/armswarm/docker:dind
+    privileged: true
+    detach: true
+
   build:
     image: quay.io/armswarm/docker:latest
     environment:
@@ -6,8 +11,3 @@ pipeline:
     commands:
       - apk add --no-cache grep curl
       - ./mkimage-alpine.sh
-
-services:
-  docker:
-    image: quay.io/armswarm/docker:dind
-    privileged: true
