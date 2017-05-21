@@ -1,3 +1,7 @@
+clone:
+  git:
+    image: armswarmdrone/git
+
 pipeline:
   build:
     image: quay.io/armswarm/docker:latest
