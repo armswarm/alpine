@@ -14,3 +14,8 @@ pipeline:
     when:
       branch: master
       event: push
+
+  slack:
+    image: armswarmdrone/slack
+    when:
+      status: [ failure, success ]
