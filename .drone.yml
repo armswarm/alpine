@@ -4,10 +4,10 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://0.0.0.0:2375
     commands:
-      - /bin/sh ./mkimage-alpine.sh
+      - apk add --no-cache grep curl
+      - ./mkimage-alpine.sh
 
 services:
   docker:
     image: quay.io/armswarm/docker:dind
-    command: [ "--storage-driver=vfs", "--tls=false" ]
     privileged: true
