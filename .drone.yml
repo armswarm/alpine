@@ -10,4 +10,5 @@ pipeline:
 services:
   docker:
     image: quay.io/armswarm/docker:dind
+    command: []
     privileged: true
