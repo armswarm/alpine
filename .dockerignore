@@ -1,0 +1,6 @@
+.git
+.gitignore
+.drone.yml
+.drone.yml.sig
+LICENSE*
+README*

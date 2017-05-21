@@ -1,0 +1,13 @@
+pipeline:
+  build:
+    image: quay.io/armswarm/docker:latest
+    environment:
+      - DOCKER_HOST=tcp://0.0.0.0:2375
+    commands:
+      - ./mkimage-alpine.sh
+
+services:
+  docker:
+    image: quay.io/armswarm/docker:dind
+    command: [ "--storage-driver=vfs", "--tls=false" ]
+    privileged: true
