@@ -1,3 +1,5 @@
+platform: linux/arm
+
 clone:
   git:
     image: armswarmdrone/git
