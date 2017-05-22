@@ -3,7 +3,7 @@ clone:
     image: armswarmdrone/git
 
 pipeline:
-  build:
+  build_rootfs:
     image: quay.io/armswarm/docker:latest
     environment:
       - REL=v3.5
@@ -11,7 +11,7 @@ pipeline:
       - apk add --no-cache grep curl xz
       - ./mkimage-alpine.sh
 
-  docker:
+  publish:
     image: armswarmdrone/docker
     repo: quay.io/armswarm/alpine
     tag: [ "3.5", "latest" ]
@@ -19,7 +19,7 @@ pipeline:
       branch: master
       event: push
 
-  slack:
+  notify:
     image: armswarmdrone/slack
     when:
       status: [ failure, success ]
