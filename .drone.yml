@@ -8,7 +8,7 @@ pipeline:
   build_rootfs:
     image: quay.io/armswarm/docker:latest
     environment:
-      - REL=v3.5
+      - REL=v3.6
     commands:
       - apk add --no-cache grep curl xz
       - ./mkimage-alpine.sh
@@ -16,7 +16,7 @@ pipeline:
   publish:
     image: armswarmdrone/docker
     repo: quay.io/armswarm/alpine
-    tag: [ "3.5", "latest" ]
+    tag: [ "3.6", "latest" ]
     when:
       branch: master
       event: push
