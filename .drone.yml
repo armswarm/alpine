@@ -6,7 +6,7 @@ clone:
 
 pipeline:
   build_rootfs:
-    image: quay.io/armswarm/docker:latest
+    image: quay.io/armswarm/alpine:3.6
     environment:
       - REL=v3.6
     commands:
