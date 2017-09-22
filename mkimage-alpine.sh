@@ -8,11 +8,6 @@ set -x
 	exit 1
 }
 
-usage() {
-	printf >&2 '%s: [-r release] [-m mirror] [-s]  [-c additional repository]\n' "$0"
-	exit 1
-}
-
 tmp() {
 	TMP=$(mktemp -d ${TMPDIR:-/var/tmp}/alpine-docker-XXXXXXXXXX)
 	ROOTFS=$(mktemp -d ${TMPDIR:-/var/tmp}/alpine-docker-rootfs-XXXXXXXXXX)
@@ -32,6 +27,8 @@ getapk() {
 mkbase() {
 	$TMP/sbin/apk.static --repository $MAINREPO --update-cache --allow-untrusted \
 		--root $ROOTFS --initdb add alpine-base
+
+    rm -f "$ROOTFS/var/cache/apk/*"
 }
 
 conf() {

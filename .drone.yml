@@ -2,7 +2,7 @@ platform: linux/arm
 
 clone:
   git:
-    image: armswarmdrone/git
+    image: quay.io/armswarm/drone-git
 
 pipeline:
   build_rootfs:
@@ -14,7 +14,8 @@ pipeline:
       - ./mkimage-alpine.sh
 
   publish:
-    image: armswarmdrone/docker
+    image: quay.io/armswarm/drone-docker
+    secrets: [ docker_username, docker_password, docker_registry ]
     repo: quay.io/armswarm/alpine
     tag: [ "3.6", "latest" ]
     when:
@@ -22,6 +23,7 @@ pipeline:
       event: push
 
   notify:
-    image: armswarmdrone/slack
+    image: quay.io/armswarm/drone-slack
+    secrets: [ slack_webhook, plugin_channel, plugin_template ]
     when:
       status: [ failure, success ]
