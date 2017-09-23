@@ -41,7 +41,7 @@ save() {
 }
 
 REL=${REL:-edge}
-MIRROR=${MIRROR:-http://nl.alpinelinux.org/alpine}
+MIRROR=${MIRROR:-https://ftp.acc.umu.se/mirror/alpinelinux.org}
 MAINREPO=$MIRROR/$REL/main
 ADDITIONALREPO=$MIRROR/$REL/community
 ARCH=${ARCH:-armhf}
